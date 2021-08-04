@@ -19,14 +19,14 @@ result = db.templates.find(
 #
 # print(result)
 
-input_template2 = {
+input_template = {
     "customer_name": "text",
     "customer_birthday_date": "date",
     'customer_phone': 'phone',
     'customer_email': "email"
 }
 
-input_template = {
+input_template3 = {
     "customer_name": "text",
     "customer_birthday_date": "text",
 }
@@ -55,7 +55,7 @@ for match in matches:
         projection={"_id": 0, "name": 0}
     )
     template_match_valid = True
-    # Input template must contain 100% template in db
+    # Input template must contain 100% of template in db
     for field_name, field_value in fields.items():
         if (field_name not in input_template or input_template.get(field_name)!=field_value):
             template_match_valid = False
@@ -63,7 +63,7 @@ for match in matches:
     if template_match_valid:
         valid_templates_ids += [match]
 
-# print(f'Valid: {valid_templates_ids}')
+print(f'Valid: {valid_templates_ids}')
 
 
 # Answer
@@ -82,4 +82,4 @@ else:
     json_out["matches"] = False
     json_out["custom_template"] = input_template
 
-# pprint(json_out)
+pprint(json_out)

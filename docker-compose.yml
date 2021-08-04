@@ -19,11 +19,11 @@ services:
   fastapi:
     image: tiangolo/uvicorn-gunicorn-fastapi
     container_name: app
-    ports:
-      - "127.0.1.20:8000:80"
     volumes:
       - ./server:/app
-    command: "/start-reload.sh "
+    ports:
+      - "127.0.1.20:8000:80"
+    command: "/start-reload.sh"
     networks:
       - ftnet
 

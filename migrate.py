@@ -7,7 +7,8 @@ client = MongoClient('mongodb://root:9999@127.0.0.10:27017/?authSource=admin')
 filter={}
 db=client.admin
 serverStatusResult=db.command("serverStatus")
-# pprint(serverStatusResult)
+pprint(serverStatusResult)
+pprint(type(serverStatusResult))
 
 db=client.forms
 
@@ -35,7 +36,8 @@ def first():
     # print(delete.raw_result)
 
 def main():
-    first()
+    # first()
+    pass
 
 
 if __name__ == '__main__':
