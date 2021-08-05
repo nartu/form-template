@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Customer contact",
+        "customer_name": "text",
+        "customer_email": "email",
+        "customer_phone": "phone"
+    },
+    {
+        "name": "Whatsapp contact",
+        "contact_name": "text",
+        "whatsapp_id": "phone"
+    },
+    {
+        "name": "Customer birthday",
+        "customer_name": "text",
+        "customer_birthday_date": "date"
+    },
+    {
+        "name": "Application to Participate",
+        "participant_name": "text",
+        "participant_birthday_date": "date",
+        "participant_phone": "phone",
+        "participant_email": "email",
+        "participant_declaration": "text",
+        "date_of_request": "date"
+    }
+]

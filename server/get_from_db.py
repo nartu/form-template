@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from db import Db
 from pprint import pprint
 
 class FindTemplate(object):
@@ -11,21 +12,7 @@ class FindTemplate(object):
 
     def __init__(self, input_template):
         self.input_template = input_template
-        # for local use this file
-        # self.mongo_server = "127.0.0.10:27017"
-        # for fastapi, docker ftnet
-        self.mongo_server = "mongodb:27017"
-        self.mongo_connect = f'mongodb://root:9999@{self.mongo_server}/?authSource=admin'
-        self.db_name = "forms"
-        self.db = self.get_db()
-
-    def get_db(self):
-        client = MongoClient(self.mongo_connect)
-        return client[self.db_name]
-
-    def db_status(self):
-        serverStatusResult = self.db.command("serverStatus")
-        return serverStatusResult
+        self.db = Db().get()
 
     def matched_ids(self):
         # Input template must contain 100% of template in db
@@ -114,7 +101,7 @@ def main():
     # print(ft.matched_ids(), sep="\n")
     # pprint(ft.response())
     # pprint(ft.response_names())
-    pprint(ft.db_status())
+    pprint(ft.db)
 
 if __name__ == '__main__':
     main()
