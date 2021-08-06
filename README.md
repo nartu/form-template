@@ -1,6 +1,6 @@
-## Тествовое задание
+# Тествовое задание
 
-# Условия
+## Условия
 
 1. На вход по урлу `/get_form` POST запросом передаются данные такого вида: `f_name1=value1&f_name2=value2`
 
@@ -22,7 +22,7 @@
 https://docs.google.com/document/d/1fMFwPBs53xzcrltEFOpEG4GWTaQ-5jvVLrNT6_hmC7I/edit
 
 
-# Использование
+## Использование
 
 1. Запуск `docker-compose up -d`
 
@@ -31,7 +31,7 @@ https://docs.google.com/document/d/1fMFwPBs53xzcrltEFOpEG4GWTaQ-5jvVLrNT6_hmC7I/
 3. Примеры запросов `./examples.sh` на хосте (из докер-контейнера поставить localhost и порт 80)
 
 
-# Миграция
+## Миграция
 
 1. Заполнить таблицу шаблонов данными из json файла, по умолчанию /app/dump_last.json `curl -XPUT http://127.0.1.20:8000/migrate`
 

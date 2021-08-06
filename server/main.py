@@ -57,5 +57,4 @@ async def write_data_to_file():
 async def data_in(request: Request):
     fields_and_data = request.query_params
     fields_and_type = fields_patterns(fields_and_data)
-    # return FindTemplate(fields_and_type).matched_ids()
     return FindTemplate(fields_and_type).response_names()
