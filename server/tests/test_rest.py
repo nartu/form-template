@@ -54,7 +54,7 @@ def test_exact_match():
     r = requests.post(server+'/get_form', params=exm)
     j = r.json()
     assert j['matches']
-    assert [True for t in j['templates'] if t.get('name')==template_name]
+    assert [True for t in j['templates'] if t==template_name or t.get('name')==template_name]
 
 # THe template must be matched
 def test_match_extra_fields():
@@ -67,7 +67,7 @@ def test_match_extra_fields():
     r = requests.post(server+'/get_form', params=exm)
     j = r.json()
     assert j['matches']
-    assert [True for t in j['templates'] if t.get('name')==template_name]
+    assert [True for t in j['templates'] if t==template_name or t.get('name')==template_name]
 
 # The template must not be matched
 def test_not_match_less_fields():

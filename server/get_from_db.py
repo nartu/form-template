@@ -76,13 +76,13 @@ class FindTemplate(object):
         valid_templates_ids = self.matched_ids()
         if len(valid_templates_ids) > 0:
             out["matches"] = True
-            out["templates_names"] = []
+            out["templates"] = []
             for id in valid_templates_ids:
                 match = self.db.templates.find_one(
                     filter={"_id": id},
                     projection={"_id": 0, "name": 1}
                 )
-                out["templates_names"] += [match.get("name")]
+                out["templates"] += [match.get("name")]
         else:
             out["matches"] = False
             out["custom_template"] = self.input_template

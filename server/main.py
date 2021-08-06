@@ -39,6 +39,13 @@ async def write_data_to_db():
     r = m.from_file()
     return {'templates': r.get('count_all')}
 
+# Add from file
+@app.post("/save_to_file")
+async def write_data_to_file():
+    m = Migrate()
+    r = m.to_file()
+    return {r}
+
 # На вход по урлу /get_form POST запросом передаются данные такого вида:
 # f_name1=value1&f_name2=value2
 # {
@@ -51,4 +58,4 @@ async def data_in(request: Request):
     fields_and_data = request.query_params
     fields_and_type = fields_patterns(fields_and_data)
     # return FindTemplate(fields_and_type).matched_ids()
-    return FindTemplate(fields_and_type).response()
+    return FindTemplate(fields_and_type).response_names()
