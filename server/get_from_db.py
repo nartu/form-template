@@ -10,9 +10,9 @@ class FindTemplate(object):
     Output is matched templates names in the db.
     """
 
-    def __init__(self, input_template):
+    def __init__(self, input_template, mongo_server=None):
         self.input_template = input_template
-        self.db = Db().get()
+        self.db = Db(mongo_server).get()
 
     def matched_ids(self):
         # Input template must contain 100% of template in db
@@ -24,11 +24,14 @@ class FindTemplate(object):
                 filter=filter,
                 projection={"_id": 1}
             )
+            # return match[0]
             # matches_ar += [set([i.get("_id") for i in match])]
+            # matches += [i.get("_id") for i in match]
             field_match = {i.get("_id") for i in match}
             matches.update(field_match)
         # print(f'Candidates matches: {list(matches)[1]}')
         # Checked templates list
+        # return matches
         valid_templates_ids = []
         for match in matches:
             # print(f'Match: {match}')
@@ -96,12 +99,14 @@ def main():
         'customer_email': "email"
     }
 
-    ft = FindTemplate(input_template2)
+    input_template3 = {'customer_name': 'text', 'customer_email': 'email', 'customer_phone': 'phone'}
+
+    ft = FindTemplate(input_template3, "127.0.0.10:27017")
 
     # print(ft.matched_ids(), sep="\n")
     # pprint(ft.response())
     # pprint(ft.response_names())
-    pprint(ft.db)
+    pprint(ft.response_names())
 
 if __name__ == '__main__':
     main()

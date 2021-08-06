@@ -23,9 +23,11 @@ services:
       - ./server:/app
     ports:
       - "127.0.1.20:8000:80"
-    command: "/start-reload.sh"
+    # command: "/start-reload.sh"
     networks:
       - ftnet
+    healthcheck:
+      test: ["CMD", "pytest", "-v", "tests"]
 
 networks:
   ftnet:

@@ -4,11 +4,17 @@ import os
 from datetime import datetime
 from pprint import pprint
 
-class Migrate(object):
+class Migrate:
     """Migration of temlates with mongoDB"""
 
     def __init__(self):
         self.db = Db().get()
+
+    def clear_all(self):
+        r = self.db.templates.delete_many({})
+        return {
+            'deleted_count': r.deleted_count
+        }
 
     def from_file(self, file='dump_last.json'):
         current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -52,8 +58,9 @@ class Migrate(object):
 
 def main():
     m = Migrate()
+    # print(m.clear_all())
     # print(m.from_file())
-    pprint(m.to_file(ids=False))
+    # pprint(m.to_file(ids=False))
     # dir_path = os.path.dirname(os.path.realpath(__file__))
     # print(dir_path)
     # print(os.getcwd())

@@ -3,6 +3,13 @@ from typing import Optional, Dict, Tuple, Sequence
 from fastapi import FastAPI, Body, Path, Form, Query, Request
 from validation import fields_patterns
 from get_from_db import FindTemplate
+from migrate import Migrate
+from db import Db
+
+# fix ObjectId & FastApi conflict
+import pydantic
+from bson.objectid import ObjectId
+pydantic.json.ENCODERS_BY_TYPE[ObjectId]=str
 
 version = f"{sys.version_info.major}.{sys.version_info.minor}"
 
@@ -16,7 +23,21 @@ async def read_root():
 
 @app.get("/db_status")
 async def read_db():
-    return FindTemplate({}).db_status()
+    return Db().status()
+
+# Clear db table
+@app.delete("/clear_all")
+async def delete_all_from_db():
+    m = Migrate()
+    r = m.clear_all()
+    return r
+
+# Add from file
+@app.put("/migrate")
+async def write_data_to_db():
+    m = Migrate()
+    r = m.from_file()
+    return {'templates': r.get('count_all')}
 
 # На вход по урлу /get_form POST запросом передаются данные такого вида:
 # f_name1=value1&f_name2=value2
@@ -29,30 +50,5 @@ async def read_db():
 async def data_in(request: Request):
     fields_and_data = request.query_params
     fields_and_type = fields_patterns(fields_and_data)
+    # return FindTemplate(fields_and_type).matched_ids()
     return FindTemplate(fields_and_type).response()
-
-# @app.post("/r/")
-# def read_request(request: Request):
-#     client_host = request.client.host
-#     req = dict(request)
-#     r = dir(request)
-#     return {"client": request.client,
-#      'path_params': request.path_params,
-#      'query_params': request.query_params,
-#      # 'r': r,
-#      "r_type": request.method
-#      }
-
-@app.post("/items/{item_id}")
-async def read_items(
-    item_id: int = Path(..., title="The ID of the item to get"),
-    q: Optional[str] = Query(None, alias="item-query"),
-):
-    results = {"item_id": item_id}
-    if q:
-        results.update({"q": q})
-    return results
-
-# @app.post("/login")
-# async def login(username: str = Form(...), password: str = Form(...)):
-#     return {"username": username}
